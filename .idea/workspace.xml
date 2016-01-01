@@ -21,13 +21,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GMH.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GMH.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GMH.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4607046">
-              <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+            <state vertical-scroll-proportion="-0.87931037">
+              <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
               <folding>
-                <element signature="e#22#32#0" expanded="true" />
                 <element signature="e#17499#18526#0" expanded="false" />
               </folding>
             </state>
@@ -108,11 +107,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="printColors.cfg" pinned="false" current-in-tab="false">
+      <file leaf-file-name="printColors.cfg" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/printColors.cfg">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.10678392">
+              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -162,8 +161,8 @@
         <option value="$PROJECT_DIR$/actionDatabase.txt" />
         <option value="$PROJECT_DIR$/default.cfg" />
         <option value="$PROJECT_DIR$/dataFiles.py" />
-        <option value="$PROJECT_DIR$/printColors.cfg" />
         <option value="$PROJECT_DIR$/GMH.py" />
+        <option value="$PROJECT_DIR$/printColors.cfg" />
       </list>
     </option>
   </component>
@@ -484,7 +483,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -557,7 +556,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -568,7 +566,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="92" column="35" selection-start-line="92" selection-start-column="35" selection-end-line="92" selection-end-column="35" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -608,7 +605,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="92" column="35" selection-start-line="92" selection-start-column="35" selection-end-line="92" selection-end-column="35" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -648,7 +644,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -688,7 +683,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -728,7 +722,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -768,7 +761,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="19" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -793,7 +785,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#32#0" expanded="true" />
             <element signature="e#17499#18526#0" expanded="false" />
           </folding>
         </state>
@@ -940,22 +931,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/printColors.cfg">
+    <entry file="file://$PROJECT_DIR$/GMH.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-          <folding />
+        <state vertical-scroll-proportion="-0.87931037">
+          <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
+          <folding>
+            <element signature="e#17499#18526#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GMH.py">
+    <entry file="file://$PROJECT_DIR$/printColors.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4607046">
-          <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-          <folding>
-            <element signature="e#22#32#0" expanded="true" />
-            <element signature="e#17499#18526#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.10678392">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
