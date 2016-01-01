@@ -278,16 +278,18 @@ def doAction(): #main action event handler.
 
     #damage items in inventory
     inventoryDamage = ''
-    for item, stats in dataFiles.Characters[Char1]['inventory'].iteritems():
-        itemD = eval(actionData['Ch1']['itemDamage'])
-        if itemD != 0:
-            dataFiles.Characters[Char1]['inventory'][str(item)]['Durability'] += itemD
-            inventoryDamage += Char1+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
-    for item, stats in dataFiles.Characters[Char2]['inventory'].iteritems():
-        itemD = eval(actionData['Ch2']['itemDamage'])
-        if itemD != 0:
-            dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'] += itemD
-            inventoryDamage += Char2+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
+    if missed == False:
+        print "DAMAGING INVENTORY"
+        for item, stats in dataFiles.Characters[Char1]['inventory'].iteritems():
+            itemD = eval(actionData['Ch1']['itemDamage'])
+            if itemD != 0:
+                dataFiles.Characters[Char1]['inventory'][str(item)]['Durability'] += itemD
+                inventoryDamage += Char1+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
+        for item, stats in dataFiles.Characters[Char2]['inventory'].iteritems():
+            itemD = eval(actionData['Ch2']['itemDamage'])
+            if itemD != 0:
+                dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'] += itemD
+                inventoryDamage += Char2+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
 
     #print dataFiles.Characters[Char2]
 
@@ -482,6 +484,7 @@ class InventoryWindow (QtGui.QDialog, Ui_Dialog):
         self.nameBox = QtGui.QLineEdit()
         self.statsLayout.addRow("Name:", self.nameBox)
         self.durabilityBox = QtGui.QDoubleSpinBox()
+        self.durabilityBox.setRange(-9999,9999)
         self.statsLayout.addRow("Durability:", self.durabilityBox)
         self.inventoryList.currentItemChanged.connect(updateInventoryUIStats)
         self.setItemPropertiesBtn.clicked.connect(setItemStats)
@@ -520,6 +523,9 @@ class CharacterEditWindow (QtGui.QDialog, Ui_Dialog):
             self.statsLayout.addRow(attr+":",spinBox)
             spinBox.setRange(-9999,9999)
             spinBox.setObjectName("SB_CharAttr_"+attr)
+
+        self.totalStatsLabel = QtGui.QLabel ('')
+        self.statsLayout.addRow("Total stats:", self.totalStatsLabel)
 
 qtGraphQTC = "GMH_TestGraphs.ui" # Enter file here.
 Ui_GraphDialog, QtBaseClass = uic.loadUiType(qtGraphQTC)
@@ -566,6 +572,16 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         with open(dataFiles.configFile['CSS'],"r") as fh:
             self.setStyleSheet(fh.read())
 
+        def styleDefault():
+            with open('flistDefault.css',"r") as fh:
+                self.setStyleSheet(fh.read())
+        def styleDark():
+            with open('flistDark.css',"r") as fh:
+                self.setStyleSheet(fh.read())
+        def styleBright():
+            with open('flistBright.css',"r") as fh:
+                self.setStyleSheet(fh.read())
+
         def openHelpFile():
             import os
             import platform
@@ -580,6 +596,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 os.system("open "+filename)
 
         self.actionHelp.triggered.connect(openHelpFile)
+
+        self.actionDefault.triggered.connect(styleDefault)
+        self.actionDark.triggered.connect(styleDark)
+        self.actionBright.triggered.connect(styleBright)
 
 
 

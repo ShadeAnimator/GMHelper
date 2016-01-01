@@ -138,8 +138,18 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuReload_StyleSheet">
+     <property name="title">
+      <string>Reload StyleSheet</string>
+     </property>
+     <addaction name="actionDefault"/>
+     <addaction name="actionDark"/>
+     <addaction name="actionBright"/>
+    </widget>
     <addaction name="actionSave_Characters_All"/>
     <addaction name="actionLoad_Characters_All"/>
+    <addaction name="separator"/>
+    <addaction name="menuReload_StyleSheet"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -253,6 +263,21 @@
   <action name="actionInventory">
    <property name="text">
     <string>Inventory</string>
+   </property>
+  </action>
+  <action name="actionDefault">
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="actionDark">
+   <property name="text">
+    <string>Dark</string>
+   </property>
+  </action>
+  <action name="actionBright">
+   <property name="text">
+    <string>Bright</string>
    </property>
   </action>
  </widget>

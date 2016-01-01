@@ -15,20 +15,92 @@
       "Stamina": "0.0",
       "dexterity": "0.0",
       "strength": "0.0",
-      "Health": "((mainDice*(Ch1['strength']/Ch2['endurance']))+weaponDamage)*(-1)*crit",
-      "Consciousness": "0.0",
+      "Health": "((((mainDice*2)*(Ch1['strength']/Ch2['endurance']))+weaponDamage)*(-1)*crit)*(Ch1['Stamina']/100)",
+      "Consciousness": "((((mainDice*2.5)*(Ch1['strength']/Ch2['endurance']))+weaponDamage)*(-1)*crit*crit)*(Ch1['Stamina']/100)",
       "Arousal": "0.0",
       "endurance": "0.0",
       "luck": "0.0",
-      "itemDamage": "5+mainDice*(-1)*Ch1['strength']/Ch2['endurance']*crit+weaponDamage"
+      "itemDamage": "((mainDice/2)+nodes.roll(1,5,5,1))*(-1)"
     }
   },
   "Skip": {
     "Ch1": {
+      "Stamina": "10.0+Ch1['endurance']",
+      "dexterity": "0.0",
+      "strength": "0.0",
+      "Health": "0.0",
+      "Consciousness": "0.0",
+      "Arousal": "0.0",
+      "endurance": "0.0",
+      "luck": "0.0",
+      "itemDamage": "0.0"
+    },
+    "Ch2": {
+      "Stamina": "5.0+Ch2['endurance']",
+      "dexterity": "0.0",
+      "strength": "0.0",
+      "Health": "0.0",
+      "Consciousness": "0.0",
+      "Arousal": "0.0",
+      "endurance": "0.0",
+      "luck": "0.0",
+      "itemDamage": "0.0"
+    }
+  },
+  "Molest": {
+    "Ch1": {
+      "Stamina": "-5.0",
+      "dexterity": "0.0",
+      "strength": "0.0",
+      "Health": "mainDice/5",
+      "Consciousness": "0.0",
+      "Arousal": "0.0",
+      "endurance": "0.0",
+      "luck": "0.0",
+      "itemDamage": "0.0"
+    },
+    "Ch2": {
       "Stamina": "0.0",
       "dexterity": "0.0",
       "strength": "0.0",
       "Health": "0.0",
+      "Consciousness": "0.0",
+      "Arousal": "(mainDice/5)+nodes.roll(1,20,Ch1['Stamina'],50)+crit",
+      "endurance": "0.0",
+      "luck": "0.0",
+      "itemDamage": "0.0"
+    }
+  },
+  "Fuck": {
+    "Ch1": {
+      "Stamina": "-5.0",
+      "dexterity": "0.0",
+      "strength": "0.0",
+      "Health": "mainDice/5",
+      "Consciousness": "0.0",
+      "Arousal": "(mainDice/5)+nodes.roll(1,20,Ch1['Stamina'],Ch2['Stamina'])+crit",
+      "endurance": "0.0",
+      "luck": "0.0",
+      "itemDamage": "0.0"
+    },
+    "Ch2": {
+      "Stamina": "-3",
+      "dexterity": "0.0",
+      "strength": "0.0",
+      "Health": "(mainDice/5)*(-1)",
+      "Consciousness": "0.0",
+      "Arousal": "(mainDice/10)+nodes.roll(1,20,Ch2['Stamina'],Ch1['Stamina'])+crit",
+      "endurance": "0.0",
+      "luck": "0.0",
+      "itemDamage": "0.0"
+    }
+  },
+  "ItemDamage": {
+    "Ch1": {
+      "Stamina": "-5",
+      "dexterity": "0.0",
+      "strength": "0.0",
+      "Health": "mainDice/5",
       "Consciousness": "0.0",
       "Arousal": "0.0",
       "endurance": "0.0",
@@ -44,7 +116,7 @@
       "Arousal": "0.0",
       "endurance": "0.0",
       "luck": "0.0",
-      "itemDamage": "0.0"
+      "itemDamage": "(mainDice*(-1))-10"
     }
   }
 }

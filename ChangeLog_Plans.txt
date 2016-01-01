@@ -13,7 +13,17 @@
 -add weaponDamage to action and CritMultiplier
 
 [TODO]
--Stamina check
+- increase stamina drain
+
+- arousal gameplay. High arousal inflences what?
+
+- add used action name to output
+
+- waking up from KOs, how should it work?
+
+- Stamina check
+
+- Add at least 1-level undo
 
 - Add options to choose dices and sides for lucky roll
 - A fast way to swap sender/receiver. Right now, I have to click on one selection box, pick one, then another...
