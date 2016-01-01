@@ -21,10 +21,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GMH.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GMH.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GMH.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.655172">
+            <state vertical-scroll-proportion="0.66753584">
               <caret line="509" column="43" selection-start-line="509" selection-start-column="43" selection-end-line="509" selection-end-column="43" />
               <folding>
                 <element signature="e#22#32#0" expanded="true" />
@@ -37,16 +37,6 @@
                 <element signature="e#9987#10776#0" expanded="false" />
                 <element signature="e#10806#12148#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -169,6 +159,7 @@
         <option value="$PROJECT_DIR$/flistDark.css" />
         <option value="$PROJECT_DIR$/tests.py" />
         <option value="$PROJECT_DIR$/GMH.py" />
+        <option value="$PROJECT_DIR$/SoftwareUsed.txt" />
       </list>
     </option>
   </component>
@@ -1000,9 +991,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SoftwareUsed.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GMH.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.655172">
+        <state vertical-scroll-proportion="0.66753584">
           <caret line="509" column="43" selection-start-line="509" selection-start-column="43" selection-end-line="509" selection-end-column="43" />
           <folding>
             <element signature="e#22#32#0" expanded="true" />
@@ -1015,14 +1014,6 @@
             <element signature="e#9987#10776#0" expanded="false" />
             <element signature="e#10806#12148#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
