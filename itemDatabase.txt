@@ -1,0 +1,5 @@
+{
+ "Items": "itemDatabase.txt", 
+ "Actions": "actionDatabase.txt", 
+ "Characters": "characterDatabase.txt"
+}

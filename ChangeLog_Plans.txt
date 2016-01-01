@@ -1,0 +1,28 @@
+[DONE]
+- JSON read write
+- Save all characters to JSON
+- Edit character stats
+- Actions list
+- INI file to set user defined databases
+- Modular action system (health = formula(1d5+strength+10/endurancechar2)*-1 or NODES) USE EVAL!!!!! print eval("2+2")
+- Items list
+- Items list edit
+- Inventory stats use. Create function which will add stats to char, and substract when needed.
+- Ability to just roll a dice and output it's value, based on characters' luck\stats, without executing any actions. The dice formula should be configurable like an action
+- Inventory items' durability use
+-add weaponDamage to action and CritMultiplier
+
+[TODO]
+-Stamina check
+
+- Add options to choose dices and sides for lucky roll
+- A fast way to swap sender/receiver. Right now, I have to click on one selection box, pick one, then another...
+- LICENSE file. It may see unnecessary now, but you can forget to add it when pushing out to github, and then there will be another project with public source, but without a copy-left license. So nobody can do anything with it, the default setting for copyright/intellectual property forbids everything what is not allowed. What specific license is another question, but unless you know something about this area, I would just stick there "GNU GPL v2 or newer", so anyone can work with the source, but has to keep your attribution and the license. (Pulling SW licenses on F-list... an example of professional deformation, I guess. :D)
+- I have now realised one thing which I will maybe add also to my fork before your work is done. Even though maybe you get it working before I get to it: alternate colour scheme for white background. For example when sending over email, yellow is really not readable, and highlighting lines with dark background looks ugly... :-)
+- Looking on the test graph for luck rolls - you just roll some 20 numbers and plot them... This is not a good way, the sample is way bellow statistical usability and you can get results that looks different than what the true statistical property in long time is. Better way is how I did it in the python file: roll many times, the more, the better, but at least few hundreds times, and make histogram. That is, don't plot roll values, but "how many rolls had this value". That will tell you much more about distribution of specific values, than just 20 random rolls.
+
+- Graphs should show comparison of two characters, and the relation between the higher roll and it's influence on health\stamina, at least in attacks
+- Store game history to see the graph if needed
+- Settings window to let user edit INI file from UI
+
+- Fix bug. Creating new item - can't edit properties.
