@@ -13,6 +13,8 @@ import json
 import bbcode
 import actionNodes as nodes
 from datetime import datetime
+import undo
+stack = undo.stack()
 
 #define color vars
 colorStat = dataFiles.PrintColors['stats']
@@ -216,7 +218,7 @@ def compareStats(before, after): #compare stats before and after and output
     return output
 
 #Region ACTION FUNCTIONS
-def doAction(): #main action event handler.
+def doAction(*args): #main action event handler.
     log ('Action roll!')
     startInventoryUse()
     characterStatus = ''
@@ -471,6 +473,7 @@ def printStats():
 
     output = bbc.bold(output)
     showOutput(output)
+
 #=====================================================================
 
 inventoryQTC = "GMH_Inventory.ui"
