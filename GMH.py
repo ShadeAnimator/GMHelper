@@ -134,7 +134,6 @@ def showLuckGraph():
     graphDialog.pGraph.plot(data1, pen='r')
     graphDialog.pGraph.plot(data2, pen='b')
 
-
 def showDamageGraph():
     Char1 = str(window.charList.currentText())
     Char2 = str(window.char2List.currentText())
@@ -151,6 +150,28 @@ def showDamageGraph():
         char2HealthRoll = eval(actionData['Ch2']['Health'])*-1
         data1.append(char1HealthRoll)
         data2.append(char2HealthRoll)
+
+    graphDialog.pGraph.clear()
+    graphDialog.pGraph.plot(data1, pen='r')
+    graphDialog.pGraph.plot(data2, pen='b')
+
+def showMissGraph():
+    rollsNum = graphDialog.rollsNumberSB.value()
+    Char1 = str(window.charList.currentText())
+    Char2 = str(window.char2List.currentText())
+    actionData = dataFiles.Actions[str(window.actionList.currentText())]
+
+    data1 = []
+    data2 = []
+    Ch1 = dataFiles.Characters[Char1].copy()
+    Ch2 = dataFiles.Characters[Char2].copy()
+
+    for x in range (0,rollsNum):
+        missDice = round(nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity']),0)+3
+        missDice2 = round(nodes.roll(1,1,Ch2['dexterity'], Ch1['dexterity']),0)
+        print missDice, missDice2
+        data1.append(missDice)
+        data2.append(missDice2)
 
     graphDialog.pGraph.clear()
     graphDialog.pGraph.plot(data1, pen='r')
@@ -198,6 +219,11 @@ def doAction(): #main action event handler.
     Ch2 = dataFiles.Characters[Char2].copy()
 
     #VARIABLES FOR ACTIONS
+    missDice = nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity'])
+    if missDice < 0.5:
+        missed = True
+    else:
+        missed = False
     mainDice = nodes.roll(1,20,Ch1['luck'],1)
     weaponDamage = 0
     for item, stats in dataFiles.Characters[Char1]['inventory'].iteritems():
@@ -216,19 +242,26 @@ def doAction(): #main action event handler.
     for attr in dataFiles.AllAttributes:
         if attr == 'Health':
             if dataFiles.Characters[Char1]['Stamina'] > 0:
-                damage = eval(actionData['Ch2'][attr])
-                dataFiles.Characters[Char1][attr] += eval(actionData['Ch1'][attr])
-                dataFiles.Characters[Char2][attr] += damage
-                log ("Stamina is above 0, normal damage evaluation: "+str(damage))
+                influence1 = eval(actionData['Ch1'][attr])
+                influence2 = eval(actionData['Ch2'][attr])
+
+                log ("Stamina is above 0, normal damage evaluation: "+str(influence2))
             else:
                 log ("Stamina is below  0, divided damage evaluation")
                 characterStatus += Char1+ "'s stamina is below 0, damage lowered!"
-                dataFiles.Characters[Char1][attr] += eval(actionData['Ch1'][attr])/10
-                dataFiles.Characters[Char2][attr] += eval(actionData['Ch2'][attr])/10
+                influence1 = eval(actionData['Ch1'][attr])/10
+                influence2 = eval(actionData['Ch2'][attr])/10
         else:
             log ("Evaluating "+attr+" stat")
-            dataFiles.Characters[Char1][attr] += eval(actionData['Ch1'][attr])
-            dataFiles.Characters[Char2][attr] += eval(actionData['Ch2'][attr])
+            influence1 = eval(actionData['Ch1'][attr])
+            influence2 = eval(actionData['Ch2'][attr])
+
+        if (missed and attr != "Stamina"): #If missed skip any influences except for stamina
+            log ("Missed, skipping influencing of "+str(attr))
+        else:
+            log ("Influencing "+str(attr)+": "+str(influence1)+"; "+str(influence2))
+            dataFiles.Characters[Char1][attr] += influence1
+            dataFiles.Characters[Char2][attr] += influence2
 
     #damage items in inventory
     inventoryDamage = ''
@@ -245,7 +278,8 @@ def doAction(): #main action event handler.
 
     #print dataFiles.Characters[Char2]
 
-
+    if missed:
+        critText += bbc.color("MISS!", 'red')
 
     #region Printing output
 
@@ -253,7 +287,8 @@ def doAction(): #main action event handler.
         characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below -100! Death suggested!\n", 'red'))
     elif dataFiles.Characters[Char1]['Health'] < 0:
         characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below 0! KO or Death suggested!\n", 'red'))
-    else: pass
+    else:
+        pass
     if dataFiles.Characters[Char2]['Health'] < -100:
         characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below -100! Death suggested!\n", 'red'))
     elif dataFiles.Characters[Char2]['Health'] < 0:
@@ -264,7 +299,7 @@ def doAction(): #main action event handler.
 
     ch1OutputStats = bbc.color(Char1, 'yellow')+' '+compareStats(Ch1, dataFiles.Characters[Char1])
     ch2OutputStats = bbc.color(Char2, 'yellow')+' '+compareStats(Ch2, dataFiles.Characters[Char2])
-    output = bbc.bold(Char1+" ==> "+Char2+'\n\n'+critText+characterStatus+ch1OutputStats+'\n'+ch2OutputStats+'\n'+inventoryDamage+'\n'+inventoryReport+'\n\n'+bbc.color('Main Dice Roll: ', 'red')+str(mainDice))
+    output = bbc.bold(Char1+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', 'red')+str(mainDice))
     showOutput(output)
     #log (json.dumps(dataFiles.Characters, sort_keys=True, indent=4, separators=(',', ': ')))
     log('Action roll done!')
@@ -465,6 +500,7 @@ class GraphWindow (QtGui.QDialog, Ui_GraphDialog):
         self.pGraph = pg.PlotWidget()
         self.verticalLayout.addWidget(self.pGraph)
         self.plotDamageBtn.clicked.connect(showDamageGraph)
+        self.missPlotButton.clicked.connect(showMissGraph)
 
 qtCreatorFile = "GHM_MainWindow.ui" # Enter file here.
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)

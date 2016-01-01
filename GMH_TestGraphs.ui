@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>886</width>
-    <height>332</height>
+    <height>357</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,7 +24,17 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+       <item row="3" column="0">
+        <widget class="QPushButton" name="plotDamageBtn">
+         <property name="toolTip">
+          <string>This will show you how your ROLL influences the damage output.</string>
+         </property>
+         <property name="text">
+          <string>Plot Damage Rolls</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QPushButton" name="plotLuckBtn">
          <property name="toolTip">
           <string>This will show you how your luck distributes through a number of random rolls.</string>
@@ -35,14 +45,32 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="plotDamageBtn">
-         <property name="toolTip">
-          <string>This will show you how your ROLL influences the damage output.</string>
-         </property>
+        <widget class="QPushButton" name="missPlotButton">
          <property name="text">
-          <string>Plot Damage Rolls</string>
+          <string>Plot MISSes</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Number of rolls</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="rollsNumberSB">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
