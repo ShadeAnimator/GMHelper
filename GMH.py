@@ -13,6 +13,16 @@ import json
 import bbcode
 import actionNodes as nodes
 from datetime import datetime
+
+#define color vars
+colorStat = dataFiles.PrintColors['stats']
+colorName = dataFiles.PrintColors['names']
+colorWarn = dataFiles.PrintColors['warn']
+colorGood = dataFiles.PrintColors['good']
+
+
+
+
 def showOutput(text):
     window.outbox.setText(text)
     window.fancyOutbox.setText(bbcode.render_html(text))
@@ -58,7 +68,7 @@ def updateChar():
 
     #Characters[nameBox.text()] = Characters.pop[str(name)]
     for attr in dataFiles.AllAttributes:
-        spinBox = CE_Dialog.findChild(QtGui.QSpinBox, "SB_CharAttr_"+attr)
+        spinBox = CE_Dialog.findChild(QtGui.QDoubleSpinBox, "SB_CharAttr_"+attr)
         try:
             dataFiles.Characters[str(name)][attr]=spinBox.value()
         except:
@@ -81,7 +91,7 @@ def updateAttrs():
     nameBox = CE_Dialog.findChild(QtGui.QLineEdit, "nameBox")
     nameBox.setText(name)
     for attr in dataFiles.AllAttributes:
-        spinBox = CE_Dialog.findChild(QtGui.QSpinBox, "SB_CharAttr_"+attr)
+        spinBox = CE_Dialog.findChild(QtGui.QDoubleSpinBox, "SB_CharAttr_"+attr)
         try:
             spinBox.setValue(dataFiles.Characters[name][attr])
         except:
@@ -187,14 +197,16 @@ def compareStats(before, after): #compare stats before and after and output
     for key, value in after.iteritems():
         try:
             d = value-before[key]
+            if key[0].isupper() == False:
+                d = d*(-1)
             keyS = key.encode('ascii','ignore')
             valueS = str(value)
             dS=str(d)
             if value != before[key]:
                 if d > 0:
-                    col = 'green'
+                    col = colorGood
                 else:
-                    col = 'red'
+                    col = colorWarn
                 output += keyS+": "+valueS+bbc.color("("+dS+")",col)+"; "
             else:
                 pass
@@ -233,28 +245,29 @@ def doAction(): #main action event handler.
             log ("Adding damage from weapons: "+str(weaponDamage))
     if mainDice == 20:
         crit = dataFiles.configFile['CritMultiplier']
-        critText = bbc.color('CRITICAL HIT! Crit mult:'+str(dataFiles.configFile['CritMultiplier']),'red')+'\n\n'
+        critText = bbc.color('CRITICAL HIT! Crit mult:'+str(dataFiles.configFile['CritMultiplier']),colorWarn)+'\n\n'
     else:
         crit = 1
         critText = ''
 
     #Evaluate actions from actionDatabase action
+
     for attr in dataFiles.AllAttributes:
         if attr == 'Health':
             if dataFiles.Characters[Char1]['Stamina'] > 0:
-                influence1 = eval(actionData['Ch1'][attr])
-                influence2 = eval(actionData['Ch2'][attr])
+                influence1 = round(eval(actionData['Ch1'][attr]))
+                influence2 = round(eval(actionData['Ch2'][attr]))
 
                 log ("Stamina is above 0, normal damage evaluation: "+str(influence2))
             else:
                 log ("Stamina is below  0, divided damage evaluation")
                 characterStatus += Char1+ "'s stamina is below 0, damage lowered!"
-                influence1 = eval(actionData['Ch1'][attr])/10
-                influence2 = eval(actionData['Ch2'][attr])/10
+                influence1 = round(eval(actionData['Ch1'][attr])/10)
+                influence2 = round(eval(actionData['Ch2'][attr])/10)
         else:
             log ("Evaluating "+attr+" stat")
-            influence1 = eval(actionData['Ch1'][attr])
-            influence2 = eval(actionData['Ch2'][attr])
+            influence1 = round(eval(actionData['Ch1'][attr]))
+            influence2 = round(eval(actionData['Ch2'][attr]))
 
         if (missed and attr != "Stamina"): #If missed skip any influences except for stamina
             log ("Missed, skipping influencing of "+str(attr))
@@ -279,27 +292,27 @@ def doAction(): #main action event handler.
     #print dataFiles.Characters[Char2]
 
     if missed:
-        critText += bbc.color("MISS!", 'red')
+        critText += bbc.color("MISS!\n\n", colorWarn)
 
     #region Printing output
 
     if dataFiles.Characters[Char1]['Health'] < -100:
-        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below -100! Death suggested!\n", 'red'))
+        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below -100! Death suggested!\n", colorWarn))
     elif dataFiles.Characters[Char1]['Health'] < 0:
-        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below 0! KO or Death suggested!\n", 'red'))
+        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below 0! KO or Death suggested!\n", colorWarn))
     else:
         pass
     if dataFiles.Characters[Char2]['Health'] < -100:
-        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below -100! Death suggested!\n", 'red'))
+        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below -100! Death suggested!\n", colorWarn))
     elif dataFiles.Characters[Char2]['Health'] < 0:
-        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below 0! KO or Death suggested!\n", 'red'))
+        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below 0! KO or Death suggested!\n", colorWarn))
     else: pass
 
     inventoryReport = stopInventoryUse()
 
-    ch1OutputStats = bbc.color(Char1, 'yellow')+' '+compareStats(Ch1, dataFiles.Characters[Char1])
-    ch2OutputStats = bbc.color(Char2, 'yellow')+' '+compareStats(Ch2, dataFiles.Characters[Char2])
-    output = bbc.bold(Char1+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', 'red')+str(mainDice))
+    ch1OutputStats = bbc.color(Char1, colorName)+' '+compareStats(Ch1, dataFiles.Characters[Char1])
+    ch2OutputStats = bbc.color(Char2, colorName)+' '+compareStats(Ch2, dataFiles.Characters[Char2])
+    output = bbc.bold(Char1+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', colorWarn)+str(mainDice))
     showOutput(output)
     #log (json.dumps(dataFiles.Characters, sort_keys=True, indent=4, separators=(',', ': ')))
     log('Action roll done!')
@@ -316,7 +329,7 @@ def luckyRoll():
 
     roll = nodes.roll(1,20,luck1,luck2)
 
-    output = bbc.bold(bbc.color('Luck Roll: ', 'red')+str(roll))
+    output = bbc.bold(bbc.color('Luck Roll: ', colorWarn)+str(roll))
     showOutput(output)
 
     stopInventoryUse()
@@ -381,7 +394,7 @@ def updateInventoryUIStats():
     inventoryDialog.durabilityBox.setValue(dataFiles.Characters[name]['inventory'][itemName]['Durability'])
     for x, ch in enumerate(sorted(dataFiles.AllItemAttributes)):
         for i, attr, in enumerate(sorted(dataFiles.AllItemAttributes[ch])):
-            spinBox = inventoryDialog.findChild(QtGui.QSpinBox, "SB_"+ch+"_Attr_"+attr)
+            spinBox = inventoryDialog.findChild(QtGui.QDoubleSpinBox, "SB_"+ch+"_Attr_"+attr)
             spinBox.setValue(dataFiles.Characters[name]['inventory'][itemName][ch][attr])
     inventoryDialog.nameBox.setText(itemName)
 
@@ -395,7 +408,7 @@ def setItemStats():
     dataFiles.Characters[name]['inventory'][itemName]['Durability'] = inventoryDialog.durabilityBox.value()
     for x, ch in enumerate(sorted(dataFiles.AllItemAttributes)):
         for i, attr, in enumerate(sorted(dataFiles.AllItemAttributes[ch])):
-            spinBox = inventoryDialog.findChild(QtGui.QSpinBox, "SB_"+ch+"_Attr_"+attr)
+            spinBox = inventoryDialog.findChild(QtGui.QDoubleSpinBox, "SB_"+ch+"_Attr_"+attr)
             dataFiles.Characters[name]['inventory'][itemName][ch][attr]=spinBox.value()
 
     if newName != itemName:
@@ -436,6 +449,26 @@ def loadChars():
     fillCharList()
     fillActionList()
 
+def printStats():
+    output = ''
+    Char1 = str(window.charList.currentText())
+    Char2 = str(window.char2List.currentText())
+
+    Ch1 = dataFiles.Characters[Char1]
+    Ch2 = dataFiles.Characters[Char2]
+
+
+    output += bbc.color(Char1+': \n', colorName)
+    for key, value in Ch1.iteritems():
+        if key != 'inventory':
+            output += bbc.color(str(key), colorStat)+": "+str(value)+"; \n"
+    output += bbc.color('\n'+Char2+': \n', colorName)
+    for key, value in Ch2.iteritems():
+        if key != 'inventory':
+            output += bbc.color(str(key), colorStat)+": "+str(value)+"; \n"
+
+    output = bbc.bold(output)
+    showOutput(output)
 #=====================================================================
 
 inventoryQTC = "GMH_Inventory.ui"
@@ -448,7 +481,7 @@ class InventoryWindow (QtGui.QDialog, Ui_Dialog):
         self.setupUi(self)
         self.nameBox = QtGui.QLineEdit()
         self.statsLayout.addRow("Name:", self.nameBox)
-        self.durabilityBox = QtGui.QSpinBox()
+        self.durabilityBox = QtGui.QDoubleSpinBox()
         self.statsLayout.addRow("Durability:", self.durabilityBox)
         self.inventoryList.currentItemChanged.connect(updateInventoryUIStats)
         self.setItemPropertiesBtn.clicked.connect(setItemStats)
@@ -458,7 +491,7 @@ class InventoryWindow (QtGui.QDialog, Ui_Dialog):
         for x, ch in enumerate(sorted(dataFiles.AllItemAttributes)):
             self.statsLayout.addRow (ch,QtGui.QLabel('_____'))
             for i, attr in enumerate(sorted(dataFiles.AllItemAttributes[ch])):
-                spinBox = QtGui.QSpinBox()
+                spinBox = QtGui.QDoubleSpinBox()
                 self.statsLayout.addRow(attr+":",spinBox)
                 spinBox.setRange(-9999,9999)
                 spinBox.setObjectName("SB_"+ch+"_Attr_"+attr)
@@ -483,7 +516,7 @@ class CharacterEditWindow (QtGui.QDialog, Ui_Dialog):
         nameBox.setObjectName("nameBox")
 
         for i, attr in enumerate(sorted(dataFiles.AllAttributes)):
-            spinBox = QtGui.QSpinBox()
+            spinBox = QtGui.QDoubleSpinBox()
             self.statsLayout.addRow(attr+":",spinBox)
             spinBox.setRange(-9999,9999)
             spinBox.setObjectName("SB_CharAttr_"+attr)
@@ -526,6 +559,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
         self.charList.currentIndexChanged.connect(updateAttrs)
         self.luckyDiceButton.clicked.connect(luckyRoll)
+        self.printStatsButton.clicked.connect(printStats)
         #self.nameBox.returnPressed.connect(updateChar)
         #end region
 

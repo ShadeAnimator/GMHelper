@@ -16,7 +16,7 @@ config_path = os.path.join(application_path, config_name)
 
 def loadJSON(fileName):
     file = open (fileName, 'r')
-    data = json.load(file, )
+    data = json.load(file)
     return data
 
 def saveJSON(fileName, data):
@@ -28,7 +28,8 @@ def reloadFiles():
     Characters = loadJSON(configFile['Characters'])
     Items = loadJSON(configFile['Items'])
     Actions = loadJSON(configFile['Actions'])
-    return configFile, Characters, Items, Actions
+    PrintColors = loadJSON(configFile['PrintColors'])
+    return configFile, Characters, Items, Actions, PrintColors
 
 AllAttributes = {"Health":100, "Stamina":100, "Arousal":0, "Consciousness":100, "strength":8,"endurance":8,"dexterity":8,"luck":8}
 InvItems = {"Axe":{"durability":10,"self":AllAttributes, "other":AllAttributes}, "Armor":{"durability":10,"self":AllAttributes, "other":AllAttributes}}
@@ -44,4 +45,4 @@ def replaceInDict(dic, oldkey, newkey):
     if newkey!=oldkey:
       dic[newkey] = dic.pop(oldkey)
 
-configFile, Characters, Items, Actions = reloadFiles()
+configFile, Characters, Items, Actions, PrintColors = reloadFiles()

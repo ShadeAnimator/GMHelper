@@ -1,94 +1,77 @@
 {
  "Girl": {
-  "dexterity": 5, 
-  "strength": 4, 
-  "Consciousness": 100, 
-  "endurance": 5, 
-  "Stamina": 100, 
-  "Health": 100, 
+  "dexterity": 7.0, 
+  "strength": 4.0, 
+  "Consciousness": 100.0, 
+  "endurance": 4.0, 
+  "Stamina": 100.0, 
+  "Health": 100.0, 
   "inventory": {
    "Leotard": {
     "Ch1": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
     }, 
     "Ch2": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
     }, 
-    "Durability": 60
-   }, 
-   "Knife": {
-    "Ch1": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
-    }, 
-    "Ch2": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
-    }, 
-    "Durability": 60
+    "Durability": 60.0
    }
   }, 
-  "Arousal": 0, 
-  "luck": 6
+  "Arousal": 0.0, 
+  "luck": 6.0
  }, 
  "Minotaur": {
-  "dexterity": 3, 
-  "strength": 8, 
-  "Consciousness": 100, 
-  "endurance": 5, 
-  "Stamina": 100, 
-  "Health": 100, 
+  "dexterity": 3.0, 
+  "strength": 7.0, 
+  "Consciousness": 100.0, 
+  "endurance": 6.0, 
+  "Stamina": 100.0, 
+  "Health": 100.0, 
   "inventory": {
    "Armor": {
     "Ch1": {
-     "dexterity": 0, 
-     "endurance": 2, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
+     "dexterity": 0.0, 
+     "endurance": 2.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
     }, 
     "Ch2": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
     }, 
-    "Durability": 50
+    "Durability": 23.0
    }, 
    "Axe": {
     "Ch1": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 2, 
-     "luck": 0
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 2.0, 
+     "luck": 0.0
     }, 
     "Ch2": {
-     "dexterity": 0, 
-     "endurance": 0, 
-     "strength": 0, 
-     "Damage": 0, 
-     "luck": 0
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
     }, 
-    "Durability": 50
+    "Durability": 23.0
    }
   }, 
-  "Arousal": 0, 
-  "luck": 4
+  "Arousal": 0.0, 
+  "luck": 4.0
  }
 }
