@@ -10,10 +10,16 @@
 - Inventory stats use. Create function which will add stats to char, and substract when needed.
 - Ability to just roll a dice and output it's value, based on characters' luck\stats, without executing any actions. The dice formula should be configurable like an action
 - Inventory items' durability use
--add weaponDamage to action and CritMultiplier
+- add weaponDamage to action and CritMultiplier
 - Missing way to much
+- Saving different cfg files
+
 
 [TODO]
+- Faster growing arousal
+
+- Stamina restoring during actions?
+
 - Add ability to save games by saving new cfg file with new paths to new data files.. somehow
 
 - GRAPHS!!! TUNING CHARACTERS!!!!

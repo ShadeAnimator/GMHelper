@@ -1,9 +1,9 @@
 {
  "Laura": {
-  "dexterity": 6.0, 
-  "strength": 6.0, 
+  "dexterity": 7.0, 
+  "strength": 3.0, 
   "Consciousness": 100.0, 
-  "endurance": 6.0, 
+  "endurance": 5.0, 
   "Stamina": 100.0, 
   "Health": 100.0, 
   "inventory": {
@@ -22,7 +22,7 @@
      "Damage": 0.0, 
      "luck": 0.0
     }, 
-    "Durability": 79.5
+    "Durability": 73.5
    }, 
    "JeanShorts": {
     "Ch1": {
@@ -39,7 +39,7 @@
      "Damage": 0.0, 
      "luck": 0.0
     }, 
-    "Durability": 59.0
+    "Durability": 57.0
    }, 
    "Bra": {
     "Ch1": {
@@ -56,17 +56,17 @@
      "Damage": 0.0, 
      "luck": 0.0
     }, 
-    "Durability": 95.5
+    "Durability": 92.5
    }
   }, 
   "Arousal": 0.0, 
-  "luck": 6.0
+  "luck": 5.0
  }, 
- "K": {
-  "dexterity": 6.0, 
-  "strength": 6.0, 
+ "Hellsha": {
+  "dexterity": 5.0, 
+  "strength": 8.0, 
   "Consciousness": 100.0, 
-  "endurance": 6.0, 
+  "endurance": 7.0, 
   "Stamina": 100.0, 
   "Health": 100.0, 
   "inventory": {
@@ -140,6 +140,6 @@
    }
   }, 
   "Arousal": 0.0, 
-  "luck": 6.0
+  "luck": 5.0
  }
 }

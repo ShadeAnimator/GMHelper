@@ -253,8 +253,8 @@ def doAction(*args): #main action event handler.
     log ('Action roll!')
     startInventoryUse()
     characterStatus = ''
-
-    actionData = dataFiles.Actions[str(window.actionList.currentText())]
+    actionName = str(window.actionList.currentText())
+    actionData = dataFiles.Actions[actionName]
     Char1 = str(window.charList.currentText())
     Char2 = str(window.char2List.currentText())
 
@@ -314,15 +314,15 @@ def doAction(*args): #main action event handler.
     if missed == False:
         print "DAMAGING INVENTORY"
         for item, stats in dataFiles.Characters[Char1]['inventory'].iteritems():
-            itemD = eval(actionData['Ch1']['itemDamage'])
+            itemD = round(eval(actionData['Ch1']['itemDamage']),0)
             if itemD != 0:
-                itemD /= round(nodes.roll(1,5,1,1)+1) #Randomise damage to different items. Should be replaced with target system
+                itemD = round(itemD/(nodes.roll(1,5,1,1)+1),0) #Randomise damage to different items. Should be replaced with target system
                 dataFiles.Characters[Char1]['inventory'][str(item)]['Durability'] += itemD
                 inventoryDamage += Char1+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
         for item, stats in dataFiles.Characters[Char2]['inventory'].iteritems():
-            itemD = eval(actionData['Ch2']['itemDamage'])
+            itemD = round(eval(actionData['Ch2']['itemDamage']),0)
             if itemD != 0:
-                itemD /= nodes.roll(1,5,1,1)+1 #See above
+                itemD = round(itemD/(nodes.roll(1,5,1,1)+1),0) #See above
                 dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'] += itemD
                 inventoryDamage += Char2+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
 
@@ -349,7 +349,7 @@ def doAction(*args): #main action event handler.
 
     ch1OutputStats = bbc.color(Char1, colorName)+' '+compareStats(Ch1, dataFiles.Characters[Char1])
     ch2OutputStats = bbc.color(Char2, colorName)+' '+compareStats(Ch2, dataFiles.Characters[Char2])
-    output = bbc.bold(Char1+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', colorWarn)+str(mainDice))
+    output = bbc.bold("\n"+Char1+" ==> "+actionName+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', colorWarn)+str(mainDice))
     showOutput(output)
     #log (json.dumps(dataFiles.Characters, sort_keys=True, indent=4, separators=(',', ': ')))
     log('Action roll done!')
@@ -539,7 +539,20 @@ def actionChanged():
     except:
         log ("Action description NOT updated. No description or corrupted?")
 
+def printActions():
+    actions = dataFiles.Actions
+    output = bbc.color("These are actions you can use in this game: \n\n",'orange')
+    for action, data in actions.iteritems():
+        output += bbc.color(str(action),"green")+": "+data['Description']+"\n"
+    showOutput(bbc.bold(output))
+    log ("Actions printed")
 
+def calcTotalPointsUsed():
+    points = 0
+    for attr in dataFiles.AllStats:
+        box = CE_Dialog.findChild(QtGui.QDoubleSpinBox, "SB_CharAttr_"+attr)
+        points += box.value()
+    CE_Dialog.totalStatsLabel.setText(str(points))
 
 #========================PYQT UI CODE=============================================
 
@@ -593,6 +606,7 @@ class CharacterEditWindow (QtGui.QDialog, Ui_Dialog):
             self.statsLayout.addRow(attr+":",spinBox)
             spinBox.setRange(-9999,9999)
             spinBox.setObjectName("SB_CharAttr_"+attr)
+            spinBox.valueChanged.connect (calcTotalPointsUsed)
 
         self.totalStatsLabel = QtGui.QLabel ('')
         self.statsLayout.addRow("Total stats:", self.totalStatsLabel)
@@ -638,6 +652,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.actionList.currentIndexChanged.connect(actionChanged)
         self.luckyDiceButton.clicked.connect(luckyRoll)
         self.printStatsButton.clicked.connect(printStats)
+        self.printActionsButton.clicked.connect(printActions)
         #self.nameBox.returnPressed.connect(updateChar)
         #end region
 

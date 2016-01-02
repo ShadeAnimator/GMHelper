@@ -91,6 +91,13 @@
           </property>
          </widget>
         </item>
+        <item row="8" column="1">
+         <widget class="QPushButton" name="printActionsButton">
+          <property name="text">
+           <string>Print actions</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item row="4" column="0">
