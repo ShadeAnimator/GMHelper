@@ -1,5 +1,6 @@
 {
   "Attack": {
+  "Description": "Basic attack.",
     "Ch1": {
       "Stamina": "-50/Ch1['endurance']",
       "dexterity": "0.0",
@@ -24,6 +25,7 @@
     }
   },
   "Skip": {
+  "Description": "Rest, restore a bit of stamina.",
     "Ch1": {
       "Stamina": "10.0+Ch1['endurance']",
       "dexterity": "0.0",
@@ -48,6 +50,7 @@
     }
   },
   "Molest": {
+  "Description": "Molesting opponent. Rises opponent's arousal, while restorng a bit of your health...",
     "Ch1": {
       "Stamina": "-5.0",
       "dexterity": "0.0",
@@ -72,13 +75,14 @@
     }
   },
   "Fuck": {
+  "Description": "Fuck! Rise your and your opponents arousal, based on your stamina. Lower stamina = more arousal.",
     "Ch1": {
       "Stamina": "-5.0",
       "dexterity": "0.0",
       "strength": "0.0",
       "Health": "mainDice/5",
       "Consciousness": "0.0",
-      "Arousal": "(mainDice/5)+nodes.roll(1,20,Ch1['Stamina'],Ch2['Stamina'])+crit",
+      "Arousal": "((mainDice/10)+nodes.roll(1,20,Ch1['Stamina'],Ch2['Stamina'])+crit)/(Ch1['Stamina']/100)",
       "endurance": "0.0",
       "luck": "0.0",
       "itemDamage": "0.0"
@@ -89,18 +93,19 @@
       "strength": "0.0",
       "Health": "(mainDice/5)*(-1)",
       "Consciousness": "0.0",
-      "Arousal": "(mainDice/10)+nodes.roll(1,20,Ch2['Stamina'],Ch1['Stamina'])+crit",
+      "Arousal": "((mainDice/15)+nodes.roll(1,20,Ch2['Stamina'],Ch1['Stamina'])+crit)/(Ch2['Stamina']/100)",
       "endurance": "0.0",
       "luck": "0.0",
       "itemDamage": "0.0"
     }
   },
   "ItemDamage": {
+    "Description": "Damage items in opponents inventory. 5 stamina cost.",
     "Ch1": {
       "Stamina": "-5",
       "dexterity": "0.0",
       "strength": "0.0",
-      "Health": "mainDice/5",
+      "Health": "0.0",
       "Consciousness": "0.0",
       "Arousal": "0.0",
       "endurance": "0.0",
@@ -116,7 +121,7 @@
       "Arousal": "0.0",
       "endurance": "0.0",
       "luck": "0.0",
-      "itemDamage": "(mainDice*(-1))-10"
+      "itemDamage": "(mainDice*(-1))/10"
     }
   }
 }

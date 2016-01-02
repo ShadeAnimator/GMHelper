@@ -11,9 +11,10 @@
 - Ability to just roll a dice and output it's value, based on characters' luck\stats, without executing any actions. The dice formula should be configurable like an action
 - Inventory items' durability use
 -add weaponDamage to action and CritMultiplier
+- Missing way to much
 
 [TODO]
-- Missing way to much
+- Add ability to save games by saving new cfg file with new paths to new data files.. somehow
 
 - GRAPHS!!! TUNING CHARACTERS!!!!
 
@@ -27,7 +28,9 @@
 
 - waking up from KOs, how should it work?
 
-- Stamina check
+- Stamina check?
+
+- Grappling\Positions?
 
 - Add at least 1-level undo
 

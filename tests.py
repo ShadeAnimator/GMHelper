@@ -1,5 +1,5 @@
 __author__ = 'nixes'
-
+#Just a file for testing python commands, math, etc
 import dataFiles
 import charOps
 #defaultConfig = {'Characters':'characterDatabase.txt','Items':'itemDatabase.txt','Actions':'actionDatabase.txt'}

@@ -1,19 +1,19 @@
 #!/usr/bin/env python2.7
 __author__ = 'nixes'
 
-import sys
-from PyQt4 import QtCore, QtGui, uic
-import PyQt4
-import charOps as co
-import dataFiles
-import random
-import numpy as np
-import pyqtgraph as pg
-import bbc
-import json
-import bbcode
-import actionNodes as nodes
-from datetime import datetime
+import sys #used for writing\reading files
+from PyQt4 import QtCore, QtGui, uic #PyQt interface
+import PyQt4 #just in case
+import charOps as co #GMH module containing operations with characters, saving, loading, filling lists.
+import dataFiles #GMH module which reads from files and stores game data in itself, also contains arrays of char's stats
+import random #RANDOM!!! more random
+import numpy as np #pg uses it for something...
+import pyqtgraph as pg #pyqt graphs are based on this
+import bbc #GMH module with functions to format bbcode, bold, color, etc.
+import json #everything is stored as JSON files
+import bbcode #pretty printing bbcode into html display window
+import actionNodes as nodes #GMH module containing 'nodes', function to be used in Actions
+from datetime import datetime #for date and time, obviously
 
 
 #define color vars
@@ -24,6 +24,7 @@ colorGood = dataFiles.PrintColors['good']
 
 
 def roundTr(v):
+    # A function which is used in rouding a value from 0 to 1 by a specified in UI threshold.
     tr = graphDialog.missTrSB.value()
     if v > tr:
         v = 1.0
@@ -33,55 +34,67 @@ def roundTr(v):
 
 
 def showOutput(text):
+    #prints output bbcode in one window, and html formatted version in another.
     window.outbox.setText(text)
     window.fancyOutbox.setText(bbcode.render_html(text))
+    log("Output written.")
 
 dataFiles.reloadFiles()
 
 def log(text):
+    #A function for pretty logging with time and date
     print ">>>",datetime.now(),": "+text
+    window.statusbar.showMessage(text,0)
 
 #region CharacterEditFunctions
 def addChar():
+    #Adds a new character to the list and into the character dict
     name = "New Character"
     dataFiles.Characters.update({name:dataFiles.AllAttrsAndInv})
     window.charList.addItem (name)
     window.char2List.addItem (name)
+    log ("Character added: "+name)
 
 def delChar():
+    #Deletes selected character from the list and character dict.
+    #It uses character's name, not index
     id = window.charList.currentIndex()
     name = window.charList.currentText()
 
     window.charList.removeItem(id)
     window.char2List.removeItem(id)
     dataFiles.Characters.pop(str(name))
+    log ("Character deleted: "+str(name))
 
 def fillCharList():
+    #Fills character lists in UI from Characters dict
     for name in dataFiles.Characters:
         window.charList.addItem (name)
         window.char2List.addItem (name)
+    log ("Character lists filled")
 
 def fillActionList():
+    #Fills actions list from action dict
     for action in dataFiles.Actions:
         window.actionList.addItem (action)
+    log ("Action list filled")
 
 def updateChar():
+    #Updates character's stats.
     nameBox = CE_Dialog.findChild(QtGui.QLineEdit, "nameBox")
     id = window.charList.currentIndex()
     name = str(window.charList.currentText())
     newkey = str(nameBox.text())
 
-
-
     dataFiles.replaceInDict(dataFiles.Characters, name, newkey)
 
-    #Characters[nameBox.text()] = Characters.pop[str(name)]
+    #Go through all attributes, using the AllAttributes array, which holds all attributes which should be updated. Matched by name.
     for attr in dataFiles.AllAttributes:
-        spinBox = CE_Dialog.findChild(QtGui.QDoubleSpinBox, "SB_CharAttr_"+attr)
         try:
+            spinBox = CE_Dialog.findChild(QtGui.QDoubleSpinBox, "SB_CharAttr_"+attr)
             dataFiles.Characters[str(name)][attr]=spinBox.value()
         except:
-            pass
+            log ("ERROR settings attribute "+str(attr))
 
     window.charList.insertItem(id,newkey)
     window.charList.removeItem(id+1)
@@ -89,6 +102,7 @@ def updateChar():
     window.char2List.removeItem(id+1)
 
     window.charList.setCurrentIndex(id)
+    log ("Character updated.")
 
 
 
@@ -114,12 +128,15 @@ def updateAttrs():
             inventoryDialog.inventoryList.addItem(key)
         except:
             print "ERROR: Could not fill the inventory for", key, value
+    log ("Attributes shown for character "+name)
 
 def showEditChar():
     CE_Dialog.show()
+    log ("Edit character dialog shown")
 
 def saveAllCharacters():
     co.saveAllChars(dataFiles.Characters)
+    log ("Characters saved")
 #endregion
 
 #region GraphFunctions
@@ -152,6 +169,7 @@ def showLuckGraph():
     graphDialog.pGraph.clear()
     graphDialog.pGraph.plot(data1, pen='r')
     graphDialog.pGraph.plot(data2, pen='b')
+    log ("Luck graph plotted.")
 
 def showDamageGraph():
     Char1 = str(window.charList.currentText())
@@ -173,6 +191,8 @@ def showDamageGraph():
     graphDialog.pGraph.clear()
     graphDialog.pGraph.plot(data1, pen='r')
     graphDialog.pGraph.plot(data2, pen='b')
+    log ("damage graph plotted.")
+
 
 def showMissGraph():
     rollsNum = graphDialog.rollsNumberSB.value()
@@ -195,6 +215,8 @@ def showMissGraph():
     graphDialog.pGraph.clear()
     graphDialog.pGraph.plot(data1, pen='r')
     graphDialog.pGraph.plot(data2, pen='b')
+    log ("Miss graph plotted.")
+
 
 def showLuckGraphWindow():
     graphDialog.show()
@@ -222,7 +244,9 @@ def compareStats(before, after): #compare stats before and after and output
                 #output += key+": "+value+"; "
         except:
             print "Skipped", keyS, valueS, dS
+    log ("Stats compared.")
     return output
+
 
 #Region ACTION FUNCTIONS
 def doAction(*args): #main action event handler.
@@ -292,11 +316,13 @@ def doAction(*args): #main action event handler.
         for item, stats in dataFiles.Characters[Char1]['inventory'].iteritems():
             itemD = eval(actionData['Ch1']['itemDamage'])
             if itemD != 0:
+                itemD /= round(nodes.roll(1,5,1,1)+1) #Randomise damage to different items. Should be replaced with target system
                 dataFiles.Characters[Char1]['inventory'][str(item)]['Durability'] += itemD
                 inventoryDamage += Char1+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
         for item, stats in dataFiles.Characters[Char2]['inventory'].iteritems():
             itemD = eval(actionData['Ch2']['itemDamage'])
             if itemD != 0:
+                itemD /= nodes.roll(1,5,1,1)+1 #See above
                 dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'] += itemD
                 inventoryDamage += Char2+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
 
@@ -344,6 +370,8 @@ def luckyRoll():
     showOutput(output)
 
     stopInventoryUse()
+    log ("Lucky roll done.")
+
 
 def startInventoryUse():
     log ("Summing up inventory stats and characters'")
@@ -408,6 +436,8 @@ def updateInventoryUIStats():
             spinBox = inventoryDialog.findChild(QtGui.QDoubleSpinBox, "SB_"+ch+"_Attr_"+attr)
             spinBox.setValue(dataFiles.Characters[name]['inventory'][itemName][ch][attr])
     inventoryDialog.nameBox.setText(itemName)
+    log ("Inventory UI updated for: "+name+" - "+itemName)
+
 
 def setItemStats():
     name = str(window.charList.currentText())
@@ -426,6 +456,7 @@ def setItemStats():
         log ("Renaming...")
         dataFiles.replaceInDict(dataFiles.Characters[name]['inventory'], str(itemName), str(newName))
         inventoryDialog.inventoryList.currentItem().setText(newName)
+    log ("Item stats set: "+name+" - "+itemName)
 
 def addItem():
     newname, ok = QtGui.QInputDialog.getText(window, 'Input New Item Name', 'Enter new UNIQUE name\nFor now having multiple same objects in the list will break this simple program :( :')
@@ -434,7 +465,7 @@ def addItem():
 
     inventoryDialog.inventoryList.addItem(newname)
     dataFiles.Characters[name]['inventory'].update({str(newname):dataFiles.AllItemAttributesCreation})
-    print dataFiles.Characters
+    log ("Item added: "+newname+" for "+name)
 
 def deleteItem(itemName,character):
     listWidget = inventoryDialog.inventoryList
@@ -444,23 +475,27 @@ def deleteItem(itemName,character):
          listWidget.takeItem(r)
 
     dataFiles.Characters[character]['inventory'].pop(itemName, None)
+    log ("Item "+itemName+" deleted from "+character)
 
 
 def deleteSelectedItem():
+    log ("Delete selected item")
     selected = str(inventoryDialog.inventoryList.currentItem().text())
     character = str(window.charList.currentText())
     deleteItem(selected, character)
 #endregion
 
-def loadChars():
+def reloadData():
     window.charList.clear()
     window.char2List.clear()
     window.actionList.clear()
-    dataFiles.configFile, dataFiles.Characters, dataFiles.Items, dataFiles.Actions = dataFiles.reloadFiles()
+    dataFiles.configFile, dataFiles.Characters, dataFiles.Items, dataFiles.Actions, dataFiles.PrintColors = dataFiles.reloadFiles()
     fillCharList()
     fillActionList()
+    log ("Data reloaded.")
 
 def printStats():
+    #Print characters' stats, all of them for selected chars
     output = ''
     Char1 = str(window.charList.currentText())
     Char2 = str(window.char2List.currentText())
@@ -480,8 +515,33 @@ def printStats():
 
     output = bbc.bold(output)
     showOutput(output)
+    log ("Stats printed")
 
-#=====================================================================
+
+def loadAnotherGame():
+    #Loads another config file.
+    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', dataFiles.config_path, selectedFilter='*.cfg')
+    if fileName:
+        dataFiles.config_path = fileName
+        log ("Config file changed to: "+str(fileName))
+        reloadData()
+
+def actionChanged():
+    #Update description for action.
+
+    window.statusbar.clearMessage()
+    try:
+        actionData = dataFiles.Actions[str(window.actionList.currentText())]
+        actionDescription = str(actionData["Description"])
+        window.statusbar.showMessage(actionDescription,2000)
+        window.actionList.setStatusTip(actionDescription)
+        log ("Action description updated.")
+    except:
+        log ("Action description NOT updated. No description or corrupted?")
+
+
+
+#========================PYQT UI CODE=============================================
 
 inventoryQTC = "GMH_Inventory.ui"
 Ui_Dialog, QtBC = uic.loadUiType(inventoryQTC)
@@ -569,11 +629,13 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.actionDoButton.clicked.connect(doAction)
         self.actionCharacter.triggered.connect(showEditChar)
         self.actionInventory.triggered.connect(showInventory)
-        self.actionLoad_Characters_All.triggered.connect(loadChars)
+        self.actionLoad_Characters_All.triggered.connect(reloadData)
         self.actionSave_Characters_All.triggered.connect(saveAllCharacters)
         self.actionTest_Graph.triggered.connect(showLuckGraphWindow)
+        self.actionLoad_Another_Game.triggered.connect(loadAnotherGame)
 
         self.charList.currentIndexChanged.connect(updateAttrs)
+        self.actionList.currentIndexChanged.connect(actionChanged)
         self.luckyDiceButton.clicked.connect(luckyRoll)
         self.printStatsButton.clicked.connect(printStats)
         #self.nameBox.returnPressed.connect(updateChar)
@@ -612,7 +674,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.actionBright.triggered.connect(styleBright)
 
 
-
+#Launch and open default window and do basic startup stuff
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     window = MainWindow()
@@ -621,7 +683,6 @@ if __name__ == "__main__":
     inventoryDialog = InventoryWindow(window)
     window.show()
     #CE_Dialog.show()
-
     fillCharList()
     fillActionList()
 

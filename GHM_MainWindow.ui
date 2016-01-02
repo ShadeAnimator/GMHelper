@@ -69,6 +69,9 @@
         </item>
         <item row="5" column="1">
          <widget class="QPushButton" name="actionDoButton">
+          <property name="whatsThis">
+           <string comment="AA" extracomment="AAA"/>
+          </property>
           <property name="text">
            <string>Action Dice</string>
           </property>
@@ -140,7 +143,7 @@
     </property>
     <widget class="QMenu" name="menuReload_StyleSheet">
      <property name="title">
-      <string>Reload StyleSheet</string>
+      <string>Load StyleSheet</string>
      </property>
      <addaction name="actionDefault"/>
      <addaction name="actionDark"/>
@@ -148,6 +151,8 @@
     </widget>
     <addaction name="actionSave_Characters_All"/>
     <addaction name="actionLoad_Characters_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoad_Another_Game"/>
     <addaction name="separator"/>
     <addaction name="menuReload_StyleSheet"/>
    </widget>
@@ -177,7 +182,17 @@
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
+  </widget>
   <action name="actionSave_State">
    <property name="text">
     <string>Save State</string>
@@ -281,6 +296,11 @@
   <action name="actionUndo">
    <property name="text">
     <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionLoad_Another_Game">
+   <property name="text">
+    <string>Load Another Game</string>
    </property>
   </action>
  </widget>

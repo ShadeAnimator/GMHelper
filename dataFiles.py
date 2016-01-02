@@ -24,11 +24,13 @@ def saveJSON(fileName, data):
     json.dump(data,file, indent=True)
 
 def reloadFiles():
+    #Reload data files. Load button and startup.
     configFile = loadJSON(config_path)
     Characters = loadJSON(configFile['Characters'])
     Items = loadJSON(configFile['Items'])
     Actions = loadJSON(configFile['Actions'])
     PrintColors = loadJSON(configFile['PrintColors'])
+    print "Data files loaded"
     return configFile, Characters, Items, Actions, PrintColors
 
 AllAttributes = {"Health":100, "Stamina":100, "Arousal":0, "Consciousness":100, "strength":8,"endurance":8,"dexterity":8,"luck":8}
@@ -44,5 +46,6 @@ AllStats = ["strength","endurance","dexterity","luck"]
 def replaceInDict(dic, oldkey, newkey):
     if newkey!=oldkey:
       dic[newkey] = dic.pop(oldkey)
+    print "Replaced",str(oldkey),"with",str(newkey)
 
 configFile, Characters, Items, Actions, PrintColors = reloadFiles()
