@@ -13,6 +13,12 @@
 -add weaponDamage to action and CritMultiplier
 
 [TODO]
+- Missing way to much
+
+- GRAPHS!!! TUNING CHARACTERS!!!!
+
+- Multi-game system
+
 - increase stamina drain
 
 - arousal gameplay. High arousal inflences what?

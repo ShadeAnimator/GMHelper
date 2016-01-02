@@ -14,8 +14,7 @@ import json
 import bbcode
 import actionNodes as nodes
 from datetime import datetime
-import undo
-stack = undo.stack()
+
 
 #define color vars
 colorStat = dataFiles.PrintColors['stats']
@@ -24,6 +23,13 @@ colorWarn = dataFiles.PrintColors['warn']
 colorGood = dataFiles.PrintColors['good']
 
 
+def roundTr(v):
+    tr = graphDialog.missTrSB.value()
+    if v > tr:
+        v = 1.0
+    else:
+        v = 0.0
+    return v
 
 
 def showOutput(text):
@@ -180,8 +186,8 @@ def showMissGraph():
     Ch2 = dataFiles.Characters[Char2].copy()
 
     for x in range (0,rollsNum):
-        missDice = round(nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity']),0)+3
-        missDice2 = round(nodes.roll(1,1,Ch2['dexterity'], Ch1['dexterity']),0)
+        missDice = roundTr(nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity']))+3
+        missDice2 = roundTr(nodes.roll(1,1,Ch2['dexterity'], Ch1['dexterity']))
         print missDice, missDice2
         data1.append(missDice)
         data2.append(missDice2)

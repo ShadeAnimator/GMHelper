@@ -1,13 +1,13 @@
 {
- "Drako": {
-  "dexterity": 5.0, 
-  "strength": 9.0, 
-  "Consciousness": 52.0, 
-  "endurance": 10.0, 
-  "Stamina": 80.0, 
-  "Health": 91.0, 
+ "Laura": {
+  "dexterity": 6.0, 
+  "strength": 6.0, 
+  "Consciousness": 100.0, 
+  "endurance": 6.0, 
+  "Stamina": 100.0, 
+  "Health": 100.0, 
   "inventory": {
-   "Skin": {
+   "Sneakers": {
     "Ch1": {
      "dexterity": 0.0, 
      "endurance": 0.0, 
@@ -22,21 +22,124 @@
      "Damage": 0.0, 
      "luck": 0.0
     }, 
-    "Durability": 10013.0
+    "Durability": 79.5
+   }, 
+   "JeanShorts": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 59.0
+   }, 
+   "Bra": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 95.5
    }
   }, 
-  "Arousal": 35.0, 
+  "Arousal": 0.0, 
   "luck": 6.0
  }, 
- "Jessica": {
+ "K": {
   "dexterity": 6.0, 
-  "strength": 4.0, 
-  "Consciousness": 6.0, 
-  "endurance": 17.0, 
-  "Stamina": 96.0, 
-  "Health": 67.0, 
-  "inventory": {}, 
+  "strength": 6.0, 
+  "Consciousness": 100.0, 
+  "endurance": 6.0, 
+  "Stamina": 100.0, 
+  "Health": 100.0, 
+  "inventory": {
+   "Jacket": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 39.5
+   }, 
+   "Fur": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 2988.0
+   }, 
+   "Jeans": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 87.0
+   }, 
+   "Shirt": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 73.5
+   }
+  }, 
   "Arousal": 0.0, 
-  "luck": 2.0
+  "luck": 6.0
  }
 }
