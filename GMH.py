@@ -240,8 +240,8 @@ def doAction(*args): #main action event handler.
     Ch2 = dataFiles.Characters[Char2].copy()
 
     #VARIABLES FOR ACTIONS
-    missDice = nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity'])
-    if missDice < 0.5:
+    missDice = roundTr(nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity']))
+    if missDice == 0:
         missed = True
     else:
         missed = False
