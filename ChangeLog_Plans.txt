@@ -13,10 +13,10 @@
 - add weaponDamage to action and CritMultiplier
 - Missing way to much
 - Saving different cfg files
-
+- Faster growing arousal
+- Total points calculation
 
 [TODO]
-- Faster growing arousal
 
 - Stamina restoring during actions?
 
