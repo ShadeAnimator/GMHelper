@@ -15,13 +15,17 @@ config_path = os.path.join(application_path, config_name)
 
 
 def loadJSON(fileName):
+    print "Loading JSON:", fileName
     file = open (fileName, 'r')
     data = json.load(file)
+    print "JSON loaded"
     return data
 
 def saveJSON(fileName, data):
+    print "Saving JSON", fileName
     file = open (fileName, 'w')
     json.dump(data,file, indent=True)
+    print "JSON saved"
 
 def reloadFiles():
     #Reload data files. Load button and startup.

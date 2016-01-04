@@ -134,9 +134,7 @@ def showEditChar():
     CE_Dialog.show()
     log ("Edit character dialog shown")
 
-def saveAllCharacters():
-    co.saveAllChars(dataFiles.Characters)
-    log ("Characters saved")
+
 #endregion
 
 #region GraphFunctions
@@ -485,14 +483,7 @@ def deleteSelectedItem():
     deleteItem(selected, character)
 #endregion
 
-def reloadData():
-    window.charList.clear()
-    window.char2List.clear()
-    window.actionList.clear()
-    dataFiles.configFile, dataFiles.Characters, dataFiles.Items, dataFiles.Actions, dataFiles.PrintColors = dataFiles.reloadFiles()
-    fillCharList()
-    fillActionList()
-    log ("Data reloaded.")
+
 
 def printStats():
     #Print characters' stats, all of them for selected chars
@@ -518,13 +509,7 @@ def printStats():
     log ("Stats printed")
 
 
-def loadAnotherGame():
-    #Loads another config file.
-    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', dataFiles.config_path, selectedFilter='*.cfg')
-    if fileName:
-        dataFiles.config_path = fileName
-        log ("Config file changed to: "+str(fileName))
-        reloadData()
+
 
 def actionChanged():
     #Update description for action.
@@ -553,6 +538,51 @@ def calcTotalPointsUsed():
         box = CE_Dialog.findChild(QtGui.QDoubleSpinBox, "SB_CharAttr_"+attr)
         points += box.value()
     CE_Dialog.totalStatsLabel.setText(str(points))
+
+
+#region Saving and loading.
+
+def saveGame():
+    co.saveAllChars(dataFiles.Characters)
+    log ("Characters saved")
+
+def loadGame():
+    window.charList.clear()
+    window.char2List.clear()
+    window.actionList.clear()
+    dataFiles.configFile, dataFiles.Characters, dataFiles.Items, dataFiles.Actions, dataFiles.PrintColors = dataFiles.reloadFiles()
+    fillCharList()
+    fillActionList()
+    log ("Data reloaded.")
+
+
+def saveGameAs():
+    config = dataFiles.configFile
+    #ask for new name
+    newName = QtGui.QFileDialog.getSaveFileName(window, 'Save game as... (Create new config file and data files)', dataFiles.config_path, selectedFilter='*.cfg')
+    if newName:
+        newName = str(newName)
+        log ("New name is: "+ newName)
+    #write new file names into cfg dict
+    config['Items'] = newName.replace('.cfg','')+'_items.txt'
+    config['Actions'] = newName.replace('.cfg','')+'_actions.txt'
+    config['Characters'] = newName.replace('.cfg','')+'_chars.txt'
+    #save new cfg dict with new name
+    dataFiles.saveJSON(newName, config)
+    #save data files with new names
+    dataFiles.saveJSON (config['Characters'], dataFiles.Characters)
+    dataFiles.saveJSON(config['Actions'],dataFiles.Actions)
+    dataFiles.saveJSON(config['Items'], dataFiles.Items)
+    log ("Game saved as")
+
+def loadGameAs():
+    #Loads another config file.
+    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', dataFiles.config_path, selectedFilter='*.cfg')
+    if fileName:
+        dataFiles.config_path = fileName
+        log ("Config file changed to: "+str(fileName))
+        loadGame()
+#endregion
 
 #========================PYQT UI CODE=============================================
 
@@ -643,10 +673,12 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.actionDoButton.clicked.connect(doAction)
         self.actionCharacter.triggered.connect(showEditChar)
         self.actionInventory.triggered.connect(showInventory)
-        self.actionLoad_Characters_All.triggered.connect(reloadData)
-        self.actionSave_Characters_All.triggered.connect(saveAllCharacters)
+        self.actionLoad.triggered.connect(loadGame)
+        self.actionSave.triggered.connect(saveGame)
+        self.actionLoadAs.triggered.connect(loadGameAs)
+        self.actionSaveAs.triggered.connect(saveGameAs)
         self.actionTest_Graph.triggered.connect(showLuckGraphWindow)
-        self.actionLoad_Another_Game.triggered.connect(loadAnotherGame)
+
 
         self.charList.currentIndexChanged.connect(updateAttrs)
         self.actionList.currentIndexChanged.connect(actionChanged)

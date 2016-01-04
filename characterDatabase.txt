@@ -87,23 +87,6 @@
     }, 
     "Durability": 39.5
    }, 
-   "Jeans": {
-    "Ch1": {
-     "dexterity": 0.0, 
-     "endurance": 0.0, 
-     "strength": 0.0, 
-     "Damage": 0.0, 
-     "luck": 0.0
-    }, 
-    "Ch2": {
-     "dexterity": 0.0, 
-     "endurance": 0.0, 
-     "strength": 0.0, 
-     "Damage": 0.0, 
-     "luck": 0.0
-    }, 
-    "Durability": 87.0
-   }, 
    "Fur": {
     "Ch1": {
      "dexterity": 0.0, 
@@ -120,6 +103,23 @@
      "luck": 0.0
     }, 
     "Durability": 2988.0
+   }, 
+   "Jeans": {
+    "Ch1": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Ch2": {
+     "dexterity": 0.0, 
+     "endurance": 0.0, 
+     "strength": 0.0, 
+     "Damage": 0.0, 
+     "luck": 0.0
+    }, 
+    "Durability": 87.0
    }, 
    "Shirt": {
     "Ch1": {

@@ -21,6 +21,7 @@
 - Stamina restoring during actions?
 
 - Add ability to save games by saving new cfg file with new paths to new data files.. somehow
+*Okay, Idea... Get current cfg json into dict, add changes, save all new files.
 
 - GRAPHS!!! TUNING CHARACTERS!!!!
 

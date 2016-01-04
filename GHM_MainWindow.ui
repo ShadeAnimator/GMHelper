@@ -156,10 +156,11 @@
      <addaction name="actionDark"/>
      <addaction name="actionBright"/>
     </widget>
-    <addaction name="actionSave_Characters_All"/>
-    <addaction name="actionLoad_Characters_All"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
     <addaction name="separator"/>
-    <addaction name="actionLoad_Another_Game"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="actionLoadAs"/>
     <addaction name="separator"/>
     <addaction name="menuReload_StyleSheet"/>
    </widget>
@@ -250,14 +251,14 @@
     <string>Item</string>
    </property>
   </action>
-  <action name="actionSave_Characters_All">
+  <action name="actionSave">
    <property name="text">
-    <string>Save Characters (All)</string>
+    <string>Save</string>
    </property>
   </action>
-  <action name="actionLoad_Characters_All">
+  <action name="actionLoad">
    <property name="text">
-    <string>Load Characters (All)</string>
+    <string>Load</string>
    </property>
   </action>
   <action name="actionTest_Graph">
@@ -305,9 +306,14 @@
     <string>Undo</string>
    </property>
   </action>
-  <action name="actionLoad_Another_Game">
+  <action name="actionLoadAs">
    <property name="text">
-    <string>Load Another Game</string>
+    <string>Open as...</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="text">
+    <string>Save as...</string>
    </property>
   </action>
  </widget>
