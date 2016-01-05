@@ -1,0 +1,24 @@
+{
+ "Aboloft": {
+  "dexterity": 5.0, 
+  "strength": 10.0, 
+  "Consciousness": 79.0, 
+  "endurance": 9.0, 
+  "Stamina": 82.0, 
+  "Health": 86.0, 
+  "inventory": {}, 
+  "Arousal": 0.0, 
+  "luck": 6.0
+ }, 
+ "Nika": {
+  "dexterity": 7.0, 
+  "strength": 3.0, 
+  "Consciousness": -156.0, 
+  "endurance": 5.0, 
+  "Stamina": 70.0, 
+  "Health": 0.0, 
+  "inventory": {}, 
+  "Arousal": 0.0, 
+  "luck": 5.0
+ }
+}

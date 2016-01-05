@@ -47,6 +47,8 @@ AllItemAttributesCreation = {'Ch1':AllItemAttributesBase,'Ch2':AllItemAttributes
 
 AllStats = ["strength","endurance","dexterity","luck"]
 
+cappedStats = ['Health', 'Stamina']
+
 def replaceInDict(dic, oldkey, newkey):
     if newkey!=oldkey:
       dic[newkey] = dic.pop(oldkey)

@@ -15,13 +15,13 @@
 - Saving different cfg files
 - Faster growing arousal
 - Total points calculation
-
-[TODO]
-
-- Stamina restoring during actions?
-
 - Add ability to save games by saving new cfg file with new paths to new data files.. somehow
 *Okay, Idea... Get current cfg json into dict, add changes, save all new files.
+
+[TODO]
+- Stats cap
+
+- Stamina restoring during actions?
 
 - GRAPHS!!! TUNING CHARACTERS!!!!
 

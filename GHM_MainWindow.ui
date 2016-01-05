@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>GMH v.0.1</string>
+   <string>GMH - default.cfg</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">

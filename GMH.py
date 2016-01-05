@@ -261,7 +261,7 @@ def doAction(*args): #main action event handler.
     Ch1 = dataFiles.Characters[Char1].copy()
     Ch2 = dataFiles.Characters[Char2].copy()
 
-    #VARIABLES FOR ACTIONS
+    #region VARIABLES FOR ACTIONS
     missDice = roundTr(nodes.roll(1,1,Ch1['dexterity'], Ch2['dexterity']))
     if missDice == 0:
         missed = True
@@ -280,9 +280,9 @@ def doAction(*args): #main action event handler.
     else:
         crit = 1
         critText = ''
+    #endregion
 
-    #Evaluate actions from actionDatabase action
-
+    #region Evaluate actions from actionDatabase action
     for attr in dataFiles.AllAttributes:
         if attr == 'Health':
             if dataFiles.Characters[Char1]['Stamina'] > 0:
@@ -306,8 +306,9 @@ def doAction(*args): #main action event handler.
             log ("Influencing "+str(attr)+": "+str(influence1)+"; "+str(influence2))
             dataFiles.Characters[Char1][attr] += influence1
             dataFiles.Characters[Char2][attr] += influence2
+    #endregion
 
-    #damage items in inventory
+    #region damage items in inventory
     inventoryDamage = ''
     if missed == False:
         print "DAMAGING INVENTORY"
@@ -323,14 +324,31 @@ def doAction(*args): #main action event handler.
                 itemD = round(itemD/(nodes.roll(1,5,1,1)+1),0) #See above
                 dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'] += itemD
                 inventoryDamage += Char2+"'s "+item+" durability: "+str(dataFiles.Characters[Char2]['inventory'][str(item)]['Durability'])+"("+str(itemD)+"); \n"
+    #endregion
 
-    #print dataFiles.Characters[Char2]
+    #region cap stats
+    for st in dataFiles.cappedStats:
+        log ("Capping "+st)
+        if dataFiles.Characters[Char1][st] > dataFiles.configFile[st+"Cap"]:
+            dataFiles.Characters[Char1][st] = dataFiles.configFile[st+"Cap"]
+            log (Char1+"'s "+st+" is capped!")
+        if dataFiles.Characters[Char2][st] > dataFiles.configFile[st+"Cap"]:
+            dataFiles.Characters[Char2][st] = dataFiles.configFile[st+"Cap"]
+            log (Char2+"'s "+st+" is capped!")
+    if dataFiles.Characters[Char1]['Arousal'] > dataFiles.configFile["ArousalCap"]:
+            dataFiles.Characters[Char1]['Arousal'] = 0.0
+            log (Char1+" Orgasmed!")
+            characterStatus += bbc.color(Char1+" Orgasmed!\n", 'pink')
+    if dataFiles.Characters[Char2]['Arousal'] > dataFiles.configFile["ArousalCap"]:
+            dataFiles.Characters[Char2]['Arousal'] = 0.0
+            log (Char2+"Orgasmed!")
+            characterStatus += bbc.color(Char2+" Orgasmed!\n", 'pink')
+    #endregion
 
     if missed:
         critText += bbc.color("MISS!\n\n", colorWarn)
 
     #region Printing output
-
     if dataFiles.Characters[Char1]['Health'] < -100:
         characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below -100! Death suggested!\n", colorWarn))
     elif dataFiles.Characters[Char1]['Health'] < 0:
@@ -555,11 +573,10 @@ def loadGame():
     fillActionList()
     log ("Data reloaded.")
 
-
 def saveGameAs():
     config = dataFiles.configFile
     #ask for new name
-    newName = QtGui.QFileDialog.getSaveFileName(window, 'Save game as... (Create new config file and data files)', dataFiles.config_path, selectedFilter='*.cfg')
+    newName = QtGui.QFileDialog.getSaveFileName(window, 'Save game as... (Create new config file and data files)', dataFiles.config_path, selectedFilter='*.cfg', filter='*.cfg')
     if newName:
         newName = str(newName)
         log ("New name is: "+ newName)
@@ -573,15 +590,17 @@ def saveGameAs():
     dataFiles.saveJSON (config['Characters'], dataFiles.Characters)
     dataFiles.saveJSON(config['Actions'],dataFiles.Actions)
     dataFiles.saveJSON(config['Items'], dataFiles.Items)
+    window.setWindowTitle('GMH - '+newName)
     log ("Game saved as")
 
 def loadGameAs():
     #Loads another config file.
-    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', dataFiles.config_path, selectedFilter='*.cfg')
+    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', dataFiles.config_path, selectedFilter='*.cfg', filter='*.cfg')
     if fileName:
         dataFiles.config_path = fileName
         log ("Config file changed to: "+str(fileName))
         loadGame()
+    window.setWindowTitle('GMH - '+fileName)
 #endregion
 
 #========================PYQT UI CODE=============================================
