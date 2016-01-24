@@ -14,13 +14,90 @@ import json #everything is stored as JSON files
 import bbcode #pretty printing bbcode into html display window
 import actionNodes as nodes #GMH module containing 'nodes', function to be used in Actions
 from datetime import datetime #for date and time, obviously
+import re # regular expressions
 
 
-#define color vars
-colorStat = dataFiles.PrintColors['stats']
-colorName = dataFiles.PrintColors['names']
-colorWarn = dataFiles.PrintColors['warn']
-colorGood = dataFiles.PrintColors['good']
+
+class ColorsMeta(type):
+    scheme_default = 'dark'
+    scheme = 'dark'
+    known_colors = ['stats','names','warn','good']
+    _colors = {
+        val:dataFiles.PrintColors['dark'][val] for val in known_colors
+    }
+
+    _prev_colors = {}
+
+    def __getattr__(cls, name):
+        log("foo: %s"%name)
+        if name in cls.known_colors:
+            return cls._colors[name]
+        raise AttributeError(name)
+
+    def __setattr__(cls, name, value):
+        if name in cls.known_colors:
+            cls._colors[name] = value
+        super(ColorsMeta,cls).__setattr__(name, value)
+        return value
+
+    def set_scheme(cls, scheme):
+        log("Change color scheme to %s"%scheme)
+        cls.scheme = scheme
+
+        cls._prev_colors = {
+            val:cls[val] for val in cls.known_colors
+        }
+        cls._colors = {
+            val:dataFiles.PrintColors[scheme][val] for val in cls.known_colors
+        }
+
+    def __getitem__(cls, name):
+        """
+        Allow access to the colors also through Colors[foo], if needed.
+        """
+
+        if name in cls.known_colors:
+            return cls._colors[name]
+        raise KeyError(index)
+
+    def __setitem__(cls, name, value):
+        """
+        Allow access to the colors also through Colors[foo], if needed.
+        """
+
+        if name in cls.known_colors:
+            cls._colors[name] = value
+            return value
+        raise KeyError(index)
+
+    def update_colors(cls, text):
+        """
+        Update bb colors in given text from cls.previous_scheme to cls.scheme.
+        This would be probably better off in a class together with other
+        methods which cares about the output, but as long as the code stays procedural, keep it here.
+        """
+        if len(cls._prev_colors) == 0:
+            return text # no change in this case
+
+        replacements = {
+            '[color=%s]'%cls._prev_colors[val]:'[color=%s]'%cls[val] for val in cls.known_colors
+        }
+
+        return multiple_replace(replacements, text)
+
+
+class Colors:
+    __metaclass__ = ColorsMeta
+
+def multiple_replace(dict, text):
+    """
+    copied from ActiveState http://code.activestate.com/recipes/81330-single-pass-multiple-replace/
+    """
+    # Create a regular expression  from the dictionary keys
+    regex = re.compile("(%s)" % "|".join(map(re.escape, dict.keys())))
+
+    # For each match, look-up corresponding value in dictionary
+    return regex.sub(lambda mo: dict[mo.string[mo.start():mo.end()]], str(text))
 
 
 def roundTr(v):
@@ -233,9 +310,9 @@ def compareStats(before, after): #compare stats before and after and output
             dS=str(d)
             if value != before[key]:
                 if d > 0:
-                    col = colorGood
+                    col = Colors.good
                 else:
-                    col = colorWarn
+                    col = Colors.warn
                 output += keyS+": "+valueS+bbc.color("("+dS+")",col)+"; "
             else:
                 pass
@@ -276,7 +353,7 @@ def doAction(*args): #main action event handler.
             log ("Adding damage from weapons: "+str(weaponDamage))
     if mainDice == 20:
         crit = dataFiles.configFile['CritMultiplier']
-        critText = bbc.color('CRITICAL HIT! Crit mult:'+str(dataFiles.configFile['CritMultiplier']),colorWarn)+'\n\n'
+        critText = bbc.color('CRITICAL HIT! Crit mult:'+str(dataFiles.configFile['CritMultiplier']),Colors.warn)+'\n\n'
     else:
         crit = 1
         critText = ''
@@ -346,26 +423,26 @@ def doAction(*args): #main action event handler.
     #endregion
 
     if missed:
-        critText += bbc.color("MISS!\n\n", colorWarn)
+        critText += bbc.color("MISS!\n\n", Colors.warn)
 
     #region Printing output
     if dataFiles.Characters[Char1]['Health'] < -100:
-        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below -100! Death suggested!\n", colorWarn))
+        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below -100! Death suggested!\n", Colors.warn))
     elif dataFiles.Characters[Char1]['Health'] < 0:
-        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below 0! KO or Death suggested!\n", colorWarn))
+        characterStatus  += bbc.bold(bbc.color(Char1+"'s health dropped below 0! KO or Death suggested!\n", Colors.warn))
     else:
         pass
     if dataFiles.Characters[Char2]['Health'] < -100:
-        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below -100! Death suggested!\n", colorWarn))
+        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below -100! Death suggested!\n", Colors.warn))
     elif dataFiles.Characters[Char2]['Health'] < 0:
-        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below 0! KO or Death suggested!\n", colorWarn))
+        characterStatus  += bbc.bold(bbc.color(Char2+"'s health dropped below 0! KO or Death suggested!\n", Colors.warn))
     else: pass
 
     inventoryReport = stopInventoryUse()
 
-    ch1OutputStats = bbc.color(Char1, colorName)+' '+compareStats(Ch1, dataFiles.Characters[Char1])
-    ch2OutputStats = bbc.color(Char2, colorName)+' '+compareStats(Ch2, dataFiles.Characters[Char2])
-    output = bbc.bold("\n"+Char1+" ==> "+actionName+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', colorWarn)+str(mainDice))
+    ch1OutputStats = bbc.color(Char1, Colors.names)+' '+compareStats(Ch1, dataFiles.Characters[Char1])
+    ch2OutputStats = bbc.color(Char2, Colors.names)+' '+compareStats(Ch2, dataFiles.Characters[Char2])
+    output = bbc.bold("\n"+Char1+" ==> "+actionName+" ==> "+Char2+'\n\n'+str(critText)+str(characterStatus)+str(ch1OutputStats)+'\n'+str(ch2OutputStats)+'\n'+str(inventoryDamage)+'\n'+str(inventoryReport)+'\n\n'+bbc.color('Main Dice Roll: ', Colors.warn)+str(mainDice))
     showOutput(output)
     #log (json.dumps(dataFiles.Characters, sort_keys=True, indent=4, separators=(',', ': ')))
     log('Action roll done!')
@@ -382,7 +459,7 @@ def luckyRoll():
 
     roll = nodes.roll(1,20,luck1,luck2)
 
-    output = bbc.bold(bbc.color('Luck Roll: ', colorWarn)+str(roll))
+    output = bbc.bold(bbc.color('Luck Roll: ', Colors.warn)+str(roll))
     showOutput(output)
 
     stopInventoryUse()
@@ -513,14 +590,14 @@ def printStats():
     Ch2 = dataFiles.Characters[Char2]
 
 
-    output += bbc.color(Char1+': \n', colorName)
+    output += bbc.color(Char1+': \n', Colors.names)
     for key, value in Ch1.iteritems():
         if key != 'inventory':
-            output += bbc.color(str(key), colorStat)+": "+str(value)+"; \n"
-    output += bbc.color('\n'+Char2+': \n', colorName)
+            output += bbc.color(str(key), Colors.stat)+": "+str(value)+"; \n"
+    output += bbc.color('\n'+Char2+': \n', Colors.names)
     for key, value in Ch2.iteritems():
         if key != 'inventory':
-            output += bbc.color(str(key), colorStat)+": "+str(value)+"; \n"
+            output += bbc.color(str(key), Colors.stat)+": "+str(value)+"; \n"
 
     output = bbc.bold(output)
     showOutput(output)
@@ -710,15 +787,33 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         with open(dataFiles.configFile['CSS'],"r") as fh:
             self.setStyleSheet(fh.read())
 
+        def setStyle(name):
+            if name == 'default':
+                css = 'flistDefault.css'
+                name = Colors.scheme_default
+            elif name == 'dark':
+                css = 'flistDark.css'
+                pass
+            elif name == 'light':
+                css = 'flistBright.css'
+                pass
+            else:
+                raise Exception("Bad style name: %s"%name)
+
+            with open(css,"r") as fh:
+                self.setStyleSheet(fh.read())
+                Colors.set_scheme(name)
+                text = Colors.update_colors(window.outbox.toPlainText())
+                showOutput(text)
+
         def styleDefault():
-            with open('flistDefault.css',"r") as fh:
-                self.setStyleSheet(fh.read())
+            setStyle('default')
+
         def styleDark():
-            with open('flistDark.css',"r") as fh:
-                self.setStyleSheet(fh.read())
+            setStyle('dark')
+
         def styleBright():
-            with open('flistBright.css',"r") as fh:
-                self.setStyleSheet(fh.read())
+            setStyle('light')
 
         def openHelpFile():
             import os
