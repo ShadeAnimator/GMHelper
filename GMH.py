@@ -29,7 +29,6 @@ class ColorsMeta(type):
     _prev_colors = {}
 
     def __getattr__(cls, name):
-        log("foo: %s"%name)
         if name in cls.known_colors:
             return cls._colors[name]
         raise AttributeError(name)
@@ -593,11 +592,11 @@ def printStats():
     output += bbc.color(Char1+': \n', Colors.names)
     for key, value in Ch1.iteritems():
         if key != 'inventory':
-            output += bbc.color(str(key), Colors.stat)+": "+str(value)+"; \n"
+            output += bbc.color(str(key), Colors.stats)+": "+str(value)+"; \n"
     output += bbc.color('\n'+Char2+': \n', Colors.names)
     for key, value in Ch2.iteritems():
         if key != 'inventory':
-            output += bbc.color(str(key), Colors.stat)+": "+str(value)+"; \n"
+            output += bbc.color(str(key), Colors.stats)+": "+str(value)+"; \n"
 
     output = bbc.bold(output)
     showOutput(output)
