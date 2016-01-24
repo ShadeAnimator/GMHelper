@@ -15,7 +15,7 @@ import bbcode #pretty printing bbcode into html display window
 import actionNodes as nodes #GMH module containing 'nodes', function to be used in Actions
 from datetime import datetime #for date and time, obviously
 import re # regular expressions
-
+import os # for os.path
 
 
 class ColorsMeta(type):
@@ -651,29 +651,43 @@ def loadGame():
 
 def saveGameAs():
     config = dataFiles.configFile
+    path  = str(dataFiles.config_path) if not dataFiles.first_save_load \
+        else os.path.join(
+            os.path.dirname(dataFiles.config_path),
+            'saved_games',
+            'untitled.cfg')
+    saves_dir = os.path.dirname(path)
+    print("GUU: %s"%path)
     #ask for new name
-    newName = QtGui.QFileDialog.getSaveFileName(window, 'Save game as... (Create new config file and data files)', dataFiles.config_path, selectedFilter='*.cfg', filter='*.cfg')
+    newName = QtGui.QFileDialog.getSaveFileName(window, 'Save game as... (Create new config file and data files)', path, selectedFilter='*.cfg', filter='*.cfg')
     if newName:
         newName = str(newName)
         log ("New name is: "+ newName)
     #write new file names into cfg dict
-    config['Items'] = newName.replace('.cfg','')+'_items.txt'
-    config['Actions'] = newName.replace('.cfg','')+'_actions.txt'
-    config['Characters'] = newName.replace('.cfg','')+'_chars.txt'
+    config['Items'] = \
+        os.path.basename(newName).replace('.cfg','')+'_items.txt'
+    config['Actions'] = \
+        os.path.basename(newName).replace('.cfg','')+'_actions.txt'
+    config['Characters'] = \
+        os.path.basename(newName).replace('.cfg','')+'_chars.txt'
     #save new cfg dict with new name
     dataFiles.saveJSON(newName, config)
     #save data files with new names
-    dataFiles.saveJSON (config['Characters'], dataFiles.Characters)
-    dataFiles.saveJSON(config['Actions'],dataFiles.Actions)
-    dataFiles.saveJSON(config['Items'], dataFiles.Items)
+    dataFiles.saveJSON (os.path.join(saves_dir, config['Characters']), dataFiles.Characters)
+    dataFiles.saveJSON(os.path.join(saves_dir, config['Actions']),dataFiles.Actions)
+    dataFiles.saveJSON(os.path.join(saves_dir, config['Items']), dataFiles.Items)
     window.setWindowTitle('GMH - '+newName)
-    log ("Game saved as")
+    dataFiles.first_save_load = False
+    log ("Game saved as %s"%newName)
 
 def loadGameAs():
+    path  = dataFiles.config_path if not dataFiles.first_save_load \
+        else os.path.join(dataFiles.config_path, 'saved_games')
     #Loads another config file.
-    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', dataFiles.config_path, selectedFilter='*.cfg', filter='*.cfg')
+    fileName = QtGui.QFileDialog.getOpenFileName(window, 'Switch config file (Open another game preset)', path, selectedFilter='*.cfg', filter='*.cfg')
     if fileName:
         dataFiles.config_path = fileName
+        dataFiles.first_save_load = False
         log ("Config file changed to: "+str(fileName))
         loadGame()
     window.setWindowTitle('GMH - '+fileName)
