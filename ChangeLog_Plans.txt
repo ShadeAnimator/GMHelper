@@ -1,3 +1,15 @@
+[CHANGELOG 0.2]
+-
+
+
+Well, there is one problem I've been trying to ignore from the start, since I did not want to use any other language to write this for a number of simple reasons (I know python, and I wanted to practice it, and I need it now and then for my work with computer graphics and visual effects).
+
+The problem is - how to sell it to people? I'm not talking about money. I mean that if we want to create a community at least the same size it was when RF was more or less popular, then we need people to download and use it. And since first RF version I knew that people don't like to download programs on their PCs, some are scared of viruses, some just prefer to not have unwanted apps on their PCs. And there is always a compatibility issue. We can make pyqt builds for win, mac, linux, even android if needed. But thats a lot o works, compared to just openning up any browser and running an app from there. Thats why I made web version, flash. And then that other guy (Or girl :D) made JS version.
+
+So, ideally, it would be nice to somehow move it all 'in the cloud' :D But I don't know if it is even possible to create pyqt web app, researching this field now... If it is even a good idea to write a web app on python? Also... writing and reading files, what, use cookies for that? nah...
+
+Any thoughts?
+
 [DONE]
 - JSON read write
 - Save all characters to JSON

@@ -6,3 +6,16 @@ color: #ffffff;
 background: #000000;
 color: #00ff00
 }
+.widget-toggle {
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 18px; height: 9px;
+    margin-top: 15px;
+    margin-left: 13px;
+    background: url(../img/sidebar-arrows.png) no-repeat 0 -18px;
+}
+
+.widget-toggle.active {
+    background: url(../img/sidebar-arrows.png) no-repeat 0 0;
+}
