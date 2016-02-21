@@ -80,7 +80,8 @@ class MainWindow(QtGui.QMainWindow):
                         </script>
 
                         <link rel="stylesheet" type="text/css" href="https://static.f-list.net/css/common/default-0.0.10.css?trigger=1446" />
-                        <link rel='stylesheet' type='text/css' href='https://static.f-list.net/css/common/character.css?trigger=1446' />	<link rel="stylesheet" type="text/css" href="https://static.f-list.net/css/dark.css?trigger=1446" />
+                        <link rel='stylesheet' type='text/css' href='https://static.f-list.net/css/common/character.css?trigger=1446' />
+                        <link rel="stylesheet" type="text/css" href="https://static.f-list.net/css/dark.css?trigger=1446" />
                         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
                         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
                         <script src='https://static.f-list.net/js/f-list.js?trigger=1446' type='text/javascript'></script>
@@ -104,6 +105,7 @@ class MainWindow(QtGui.QMainWindow):
 
                     </head>
                 <body>
+                <noscript><div id="JSWarning">You need to enable javascript to be able to use this website.</div></noscript>
                 <td id="Content" style="min-width: 659px;">
                 <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
                 <div id="tabs-1" class="StyledForm ui-tabs-panel ui-widget-content ui-corner-bottom">
@@ -120,7 +122,11 @@ class MainWindow(QtGui.QMainWindow):
                 #endregion
 
                 content = str(textEdit.toPlainText())
-                print content
+                if cb_cbStatus.isChecked():
+                    bbcode.cb_open = True
+                else:
+                    bbcode.cb_open = False
+                #print content
                 formattedContent = bbcode.render_html(content)
                 html = header+'\n'+formattedContent+'\n'+footer
 
@@ -196,6 +202,9 @@ class MainWindow(QtGui.QMainWindow):
             #QtWebKit.QWebSettings.setAttribute(QtWebKit.QWebSettings.LocalContentCanAccessRemoteUrls, True)
             #textPreview.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
 
+            cb_cbStatus = QtGui.QCheckBox("Collapse Open")
+            cb_cbStatus.stateChanged.connect(renderHtlm)
+
 
             mainLayout.addLayout(gridLayout1)
             mainLayout.addWidget(textEdit)
@@ -212,6 +221,7 @@ class MainWindow(QtGui.QMainWindow):
             gridLayout1.addWidget(colorList,0,3)
             gridLayout1.addWidget(colorBtn,0,4)
             gridLayout1.addWidget(toClipBoardBtn,0,5)
+            gridLayout1.addWidget(cb_cbStatus,0,6)
 
 
 

@@ -4,7 +4,7 @@ __version_info__ = (1, 0, 21)
 __version__ = '.'.join(str(i) for i in __version_info__)
 
 import re
-
+cb_open = False
 # Adapted from http://daringfireball.net/2010/07/improved_regex_for_matching_urls
 # Changed to only support one level of parentheses, since it was failing catastrophically on some URLs.
 # See http://www.regular-expressions.info/catastrophic.html
@@ -127,15 +127,18 @@ class Parser (object):
         def _render_collapseBox(name, value, options, parent, context):
 
             cb_header = options['collapse']
-
+            if cb_open==True:
+                cbClass = 'CollapseHeader ExpandedHeader'
+                disp = 'block'
+            elif cb_open==False:
+                cbClass = 'CollapseHeader'
+                disp = 'none'
             #return '\n<strong><i>========= %s  ============\n\n </strong></i> %s  \n<strong><i>========= END %s  ============</strong></i>\n ' % (cb_header, value, cb_header)
             return '''
-            <div class = "CollapseHeader" bound="true">
-                <div class="CollapseHeaderText"><span>{0}</span></div>
-                <div class="CollapseBlock" style = "display:block;">
-                {1}
+            <br><div class="{0}" bound="true"><div class="CollapseHeaderText"><span>{1}</span></div><div class="CollapseBlock" style="display: {2};">
+                {3}
                 </div></div>
-            '''.format(cb_header, value)
+            '''.format(cbClass,cb_header,disp, value)
 
         self.add_formatter('collapse', _render_collapseBox, transform_newlines=True, strip=True)
 
