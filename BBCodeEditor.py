@@ -88,14 +88,16 @@ class MainWindow(QtGui.QMainWindow):
                         <script src='https://static.f-list.net/js/f-list.utils.js?trigger=1446' type='text/javascript'></script>
                         <script type="text/javascript">
                             $("div.CollapseHeader").toggle(function(){
-                            $(this).addClass("active");
+                            $(this).addClass("ExpandedHeader");
                             }, function () {
-                            $(this).removeClass("active");
+                            $(this).removeClass("ExpandedHeader");
                         });
 
+                        $(document).ready(function() {
                         //Slide up and down on click
                         $("div.CollapseHeader").click(function(){
-                            $(this).next("div.box-content").slideToggle("slow");
+                            $(this).toggleClass('inactive');
+                            $(this).parent().next("div.CollapseBlock").slideToggle("slow");
                             });
                         });
                         </script>

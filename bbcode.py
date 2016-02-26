@@ -123,6 +123,7 @@ class Parser (object):
         self.add_simple_formatter('hr', '<hr />', standalone=True)
         self.add_simple_formatter('sub', '<sub>%(value)s</sub>')
         self.add_simple_formatter('sup', '<sup>%(value)s</sup>')
+        self.add_simple_formatter('heading', '<h3>%(value)s</h3>')
         ###
         def _render_collapseBox(name, value, options, parent, context):
 
@@ -140,7 +141,7 @@ class Parser (object):
                 </div></div>
             '''.format(cbClass,cb_header,disp, value)
 
-        self.add_formatter('collapse', _render_collapseBox, transform_newlines=True, strip=True)
+        self.add_formatter('collapse', _render_collapseBox, transform_newlines=True, swallow_trailing_newline=True, escape_html=True, render_embedded=True)
 
         ###
         def _render_list(name, value, options, parent, context):
